@@ -1,2 +1,24 @@
-<h1>Restaurants#show</h1>
-<p>Find me in app/views/restaurants/show.html.erb</p>
+<h1><%= @restaurant.name %></h1>
+<div class="d-flex justify-content-between">
+  <p><%= @restaurant.category %></p>
+  <p><%= @restaurant.address %></p>
+  <p><%= @restaurant.phone_number %></p>
+</div>
+<ul class="list-group mb-5">
+  <% @restaurant.reviews.each do |review| %>
+  <li class="list-group-item">
+    <p><%= "⭐️" * review.rating %></p>
+    <p><%= review.content %></p>
+  </li>
+  <% end %>
+</ul>
+<hr/>
+
+<%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.input :rating, collection: (0..5) %>
+  <%= f.input :content %>
+  <%= f.submit class:'btn btn-primary my-4 w-100' %>
+<% end %>
+
+<hr/>
+<%= link_to "Back to restaurants", restaurants_path, class:'pb-5' %>
